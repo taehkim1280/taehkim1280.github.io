@@ -1,0 +1,68 @@
+---
+const { title = 'Portfolio', description = 'Projects and work', pageTitle } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{pageTitle ? `${pageTitle} — ${title}` : title}</title>
+  <meta name="description" content={description} />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#c7b897; 
+      --modalheadbg:#cac9c1; 
+      --modalbg:#f5f4ec; 
+      --modalbutton:#aaa79d; 
+      --gradient: #ffffff;
+      --captionbox:#dbd2b2; 
+      --titletext1:#396ea0;
+      --titletext2:#1f3f5e;
+      --smalltext:#010711; 
+      --linktext:#3b4f77; 
+      --footer: #1f2330;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; 
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; 
+      background: radial-gradient(1200px 600px at 20% 10%, var(--gradient) 0%, var(--bg) 50%), var(--bg);
+    }
+    a{color:var(--linktext); text-decoration:none}
+    a:hover{text-decoration:underline}
+
+    .container{max-width:1100px; margin:0 auto; padding:24px 16px 64px}
+    header.nav{display:flex; align-items:center; justify-content:space-between; gap:16px; padding:20px 0 8px;}
+    .brand{font-weight:800; letter-spacing:-0.02em; font-size:clamp(20px,3.6vw,28px)}
+
+    nav a{color:--linktext; margin-left:14px}
+    nav a[aria-current="page"]{color:--linktext; font-weight:600}
+
+    :global(.page-title1){color:var(--titletext2); font-size:clamp(22px,4vw,30px); margin:.2rem 0;}
+    :global(.intro){color:var(--smalltext); margin-top:4px}
+    footer{color:var(--smalltext); font-size:13px; padding-top:24px; border-top:1px solid var(--footer); margin-top:32px}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="nav">
+      <div class="brand"><a href="/">Taehoon Kim</a></div>
+      <nav>
+        <a href="/" aria-current={Astro.url.pathname === '/' ? 'page' : undefined}>Home</a>
+        <a href="/graphics" aria-current={Astro.url.pathname.startsWith('/graphics') ? 'page' : undefined}>Graphics</a>
+        <a href="/fpga" aria-current={Astro.url.pathname.startsWith('/fpga') ? 'page' : undefined}>FPGA</a>
+        <a href="/compiler" aria-current={Astro.url.pathname.startsWith('/compiler') ? 'page' : undefined}>Compiler</a>
+        <a href="/info" aria-current={Astro.url.pathname.startsWith('/info') ? 'page' : undefined}>Info</a>
+      </nav>
+    </header>
+    <slot />
+    <footer>
+      © {new Date().getFullYear()} Taehoon Kim • Built with Astro • <a href="https://github.com/withastro/astro">Docs</a>
+    </footer>
+  </div>
+</body>
+</html>

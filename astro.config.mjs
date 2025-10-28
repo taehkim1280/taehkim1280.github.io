@@ -1,5 +1,7 @@
-// @ts-check
 import { defineConfig } from 'astro/config';
 
-// https://astro.build/config
-export default defineConfig({});
+// https://docs.astro.build/en/reference/configuration-reference/
+export default defineConfig({
+  site: 'https://example.github.io/', // set this later for sitemap, etc.
+  scopedStyleStrategy: 'where',
+});

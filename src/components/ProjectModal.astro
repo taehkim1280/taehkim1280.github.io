@@ -1,0 +1,213 @@
+---
+interface Image { src: string; caption?: string }
+interface Project { title: string; src: string; caption?: string; href?: string; tags?: string[]; gallery?: Image[]; description?: string }
+const { projects = [] as Project[] } = Astro.props;
+---
+
+<script type="application/json" id="proj-data" set:html={JSON.stringify(projects)}></script>
+
+<!-- Modal root -->
+<div id="modal-root" class="lb" aria-hidden="true">
+  <div class="lb-backdrop" data-close></div>
+  <div class="lb-dialog" role="dialog" aria-modal="true" aria-label="Project viewer">
+    <div class="lb-head">
+      <div class="lb-title" id="lb-title"></div>
+      <div class="lb-actions">
+        <button class="btn" id="lb-prev" aria-label="Previous (←)">←</button>
+        <button class="btn" id="lb-next" aria-label="Next (→)">→</button>
+        <button class="btn" id="lb-close" aria-label="Close (Esc)">✕</button>
+      </div>
+    </div>
+    <div class="lb-body">
+      <div id="lb-strip" class="strip" aria-live="polite" aria-label="Project images"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Lightbox behavior script -->
+<script>
+  (function(){
+    // Parse the serialized project data from Gallery.astro
+    const dataEl = document.getElementById('proj-data') as HTMLScriptElement | null;
+    const data = dataEl?.textContent ? JSON.parse(dataEl.textContent) : [];
+    const root = document.getElementById('modal-root') as HTMLDivElement | null;
+    const title = document.getElementById('lb-title') as HTMLDivElement | null;
+    const closeBtn = document.getElementById('lb-close') as HTMLButtonElement | null;
+    const prev = document.getElementById('lb-prev') as HTMLButtonElement | null;
+    const next = document.getElementById('lb-next') as HTMLButtonElement | null;
+    const strip = document.getElementById('lb-strip') as HTMLDivElement | null;
+
+    let pIndex = 0; // which project
+    let iIndex = 0; // which image within project
+
+    function galleryFor(p: Project): Image[] {
+      if (p.gallery && p.gallery.length) return p.gallery;
+      return p.src ? [{ src: p.src, caption: p.caption }] : [];
+    }
+
+    function buildSlides(proj: Project): void {
+      if (!strip) return;
+      const gal = galleryFor(proj);
+      strip.innerHTML = gal.map(g =>
+        `<figure class="slide">
+          <img src="${g.src}" alt="${(proj.title || '').replace(/"/g, '&quot;')}" />
+          ${g.caption ? `<figcaption class="cap">${g.caption}</figcaption>` : ''}
+        </figure>`
+      ).join('');
+    }
+
+    // === Open modal ===
+    function open(projIdx: number, imgIdx: number = 0){
+      pIndex = projIdx;
+      iIndex = imgIdx || 0;
+      buildSlides(data[pIndex] ?? ({} as Project));
+      update();
+      document.addEventListener('keydown', onKeys);
+      if(!root) return;
+      root.classList.add('open');
+      root.setAttribute('aria-hidden', 'false');
+    }
+
+    // === Close modal ===
+    function close(){
+      document.removeEventListener('keydown', onKeys);
+      if(!root) return;
+      root.classList.remove('open');
+      root.setAttribute('aria-hidden', 'true');
+    }
+
+    // === Update current image and caption ===
+    function update(){
+      const proj = data[pIndex] || {};
+      const gal = proj.gallery && proj.gallery.length
+        ? proj.gallery
+        : [{ src: proj.src, caption: proj.caption }];
+      const item = gal[iIndex];
+      if(!item || !title || !strip) return;
+      title.textContent = proj.title || '';
+    }
+
+    // === Keyboard navigation ===
+    function onKeys(e: KeyboardEvent){
+      if(e.key === 'Escape') close();
+      if(e.key === 'ArrowRight') { iIndex = (iIndex + 1) % getLen(); update(); }
+      if(e.key === 'ArrowLeft')  { iIndex = (iIndex - 1 + getLen()) % getLen(); update(); }
+    }
+
+    function getLen(){
+      const proj = data[pIndex] || {};
+      const gal = proj.gallery && proj.gallery.length
+        ? proj.gallery
+        : [{ src: proj.src, caption: proj.caption }];
+      return gal.length;
+    }
+
+    // Buttons + backdrop
+    if (!prev || !next || !closeBtn || !root) return;
+    prev.addEventListener('click', () => {
+      iIndex = (iIndex - 1 + getLen()) % getLen();
+      update();
+    });
+
+    next.addEventListener('click', () => {
+      iIndex = (iIndex + 1) % getLen();
+      update();
+    });
+
+    closeBtn.addEventListener('click', close);
+
+    root.addEventListener('click', (e: MouseEvent) => {
+      const target = e.target as HTMLElement | null;
+      if (target?.dataset?.close !== undefined) close();
+    });
+
+    window.__openProjectModal = open;
+  })();
+</script>
+
+<!-- Styling -->
+<style>
+  .lb{
+    position: fixed;
+    inset: 0;
+    backdrop-filter: blur(8px) brightness(0.8);
+    background: rgba(0, 0, 0, 0.05);
+    display: none;
+    z-index: 999;
+    justify-content: center;  
+    align-items: center;      
+  }
+  .lb.open{ display: flex; }
+  .lb-backdrop{
+    position:absolute; inset:0;
+    background: rgba(5,7,12,.7);
+    backdrop-filter: saturate(1.2) blur(8px);
+    background: transparent;
+    backdrop-filter: none;
+  }
+  .lb-dialog{
+    position: relative;
+    width: 95vw;                 
+    height: 95vh;                
+    max-width: 1600px;
+    background: var(--modalheadbg);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    display: flex;
+    flex-direction: column;
+    z-index: 10000;
+  }
+  .lb-head{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:12px 16px;
+  }
+  .lb-title{ font-weight:600; color:var(--titletext2); }
+  .lb-actions{ display:flex; gap:8px }
+  .btn{
+    appearance:none; background:var(--modalbutton); border:0px;
+    color:var(--smalltext); border-radius:10px; padding:8px 10px; cursor:pointer
+  }
+  .lb-body {
+    display:flex; align-items:center; justify-content:center;
+    flex: 1 1 auto;
+    min-height: 0;             
+    overflow: hidden;          
+    background: var(--modalbg);
+  }
+  .strip{
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow-y:auto;
+    overscroll-behavior-y:contain;
+    scroll-snap-type:y mandatory;
+    -webkit-overflow-scrolling:touch;
+  }
+  .slide{
+    position: relative;
+    scroll-snap-align:start;
+    min-height: 100%;
+    display: grid;
+    place-items: center;
+    padding:0; margin:0;
+  }
+  .slide img{
+    max-width:100%;
+    max-height:100%;
+    display:block;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+  }
+  .slide .cap{
+    position:absolute;
+    left:0; right:0; bottom:0;
+    padding:10px 14px;
+    background: rgba(0,0,0,0.60);   /* semi-transparent black */
+    color:var(--smalltext)
+    font-size: 14px;
+    line-height: 1.35;
+    backdrop-filter: saturate(1.1);
+  }
+</style>

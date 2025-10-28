@@ -1,0 +1,82 @@
+---
+interface Item { title: string; src: string; caption?: string; href?: string; tags?: string[] }
+const { items = [] as Item[] } = Astro.props;
+import ProjectModal from './ProjectModal.astro';
+---
+<div class="gallery">
+  {items.map((p, idx) => (
+    <button
+      class="tile"
+      data-idx={idx}
+      aria-label={`Open ${p.title}`}
+    >
+      <figure>
+        <img src={p.src} alt={p.title} loading="lazy" />
+        <figcaption>
+          <div class="t">{p.title}</div>
+          {p.caption && <div class="c">{p.caption}</div>}
+        </figcaption>
+      </figure>
+    </button>
+  ))}
+</div>
+
+
+<!-- embed the modal so its script runs and defines the global -->
+<ProjectModal projects={items} />
+
+<!-- connect the buttons to the modal -->
+<script>
+  // declare the global defined inside ProjectModal.astro
+  declare global {
+    interface Window {
+      __openProjectModal?: (projIdx: number, imgIdx?: number) => void;
+    }
+  }
+
+  // select every gallery tile
+  const tiles = Array.from(document.querySelectorAll<HTMLButtonElement>('.tile'));
+
+  // add click + keyboard handlers
+  tiles.forEach((btn, fallbackIdx) => {
+    btn.addEventListener('click', () => {
+      const i = Number(btn.dataset.idx ?? fallbackIdx);
+      // safely call the global modal opener
+      window.__openProjectModal?.(i, 0);
+    });
+
+    btn.addEventListener('keypress', (e: KeyboardEvent) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        btn.click();
+      }
+    });
+  });
+</script>
+
+<style>
+  .gallery { column-width: 320px; column-gap: 16px; }
+  .tile {
+    break-inside: avoid;
+    display: block;
+    margin: 0 0 16px;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    text-align: inherit;
+  }
+  figure {
+    background: var(--captionbox);
+    border: 1px solid #1f2330;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,.25);
+    margin: 0;
+  }
+  img { display: block; width: 100%; height: auto; background: #0c0e14; }
+  figcaption { padding: 10px 12px; font-size: 13px; color: #c8d0dd; }
+  .t { font-size: 14px; font-weight: 600; color: var(--titletext2); }
+  .c { margin-top: 4px; color: var(--smalltext); }
+  @media (max-width: 720px) { .gallery { column-width: 100%; } }
+</style>
