@@ -3,22 +3,24 @@ interface Item { title: string; src: string; caption?: string; href?: string; ta
 const { items = [] as Item[] } = Astro.props;
 import ProjectModal from './ProjectModal.astro';
 ---
-<div class="gallery">
-  {items.map((p, idx) => (
-    <button
-      class="tile"
-      data-idx={idx}
-      aria-label={`Open ${p.title}`}
-    >
-      <figure>
-        <img src={p.src} alt={p.title} loading="lazy" />
-        <figcaption>
-          <div class="t">{p.title}</div>
-          {p.caption && <div class="c">{p.caption}</div>}
-        </figcaption>
-      </figure>
-    </button>
-  ))}
+<div class="gallery-container">
+  <div class="gallery">
+    {items.map((p, idx) => (
+      <button
+        class="tile"
+        data-idx={idx}
+        aria-label={`Open ${p.title}`}
+      >
+        <figure>
+          <img src={p.src} alt={p.title} loading="lazy" />
+          <figcaption>
+            <div class="t">{p.title}</div>
+            {p.caption && <div class="c">{p.caption}</div>}
+          </figcaption>
+        </figure>
+      </button>
+    ))}
+  </div>
 </div>
 
 
@@ -55,9 +57,20 @@ import ProjectModal from './ProjectModal.astro';
 </script>
 
 <style>
-  .gallery { column-width: 320px; column-gap: 16px; }
+  :root { --col: 438px; --gap: 16px; }
+  .gallery-container {
+    width: min(100%, calc(2*var(--col) + var(--gap)));
+    margin: 0 auto;
+  }
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(2, var(--col));
+    gap: var(--gap);
+  }
+  @media (max-width: 910px) { .gallery { grid-template-columns: 1fr; } }
   .tile {
     break-inside: avoid;
+    width: 100%;
     display: block;
     margin: 0 0 16px;
     background: none;
@@ -67,8 +80,9 @@ import ProjectModal from './ProjectModal.astro';
     text-align: inherit;
   }
   figure {
+    width: 100%;
     background: var(--captionbox);
-    border: 1px solid #1f2330;
+    border: 0px solid #1f2330;
     border-radius: 16px;
     overflow: hidden;
     box-shadow: 0 10px 30px rgba(0,0,0,.25);
@@ -78,5 +92,4 @@ import ProjectModal from './ProjectModal.astro';
   figcaption { padding: 10px 12px; font-size: 13px; color: #c8d0dd; }
   .t { font-size: 14px; font-weight: 600; color: var(--titletext2); }
   .c { margin-top: 4px; color: var(--smalltext); }
-  @media (max-width: 720px) { .gallery { column-width: 100%; } }
 </style>
