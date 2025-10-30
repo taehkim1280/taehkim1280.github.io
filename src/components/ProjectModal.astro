@@ -105,15 +105,25 @@ const { projects = [] as Project[] } = Astro.props;
     // Buttons + backdrop
     if (!prev || !next || !closeBtn || !root) return;
     prev.addEventListener('click', () => {
-      iIndex = (iIndex - 1 + getLen()) % getLen();
+      // Move to previous project (wrap around)
+      pIndex = (pIndex - 1 + data.length) % data.length;
+      iIndex = 0; // reset image index
+
+      // Rebuild modal for new project
+      buildSlides(data[pIndex]);
       update();
     });
 
     next.addEventListener('click', () => {
-      iIndex = (iIndex + 1) % getLen();
+      // Move to next project (wrap around)
+      pIndex = (pIndex + 1) % data.length;
+      iIndex = 0; // reset image index
+
+      // Rebuild modal for new project
+      buildSlides(data[pIndex]);
       update();
     });
-
+    
     closeBtn.addEventListener('click', close);
 
     root.addEventListener('click', (e: MouseEvent) => {
@@ -198,12 +208,12 @@ const { projects = [] as Project[] } = Astro.props;
     height: auto;
   }
   .slide .cap{
-    height: 20px;      
     line-height: 20px; 
     margin: 20px;
     overflow: hidden;
     color:var(--smalltext);
-    font-size: 14px;
+    font-size: 18px;
+    white-space: pre-wrap;
     backdrop-filter: saturate(1.1);
   }
 </style>
