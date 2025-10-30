@@ -56,14 +56,14 @@ As an example, we can talk about how one could roughly emulate basic structures 
     ]
   },
   { 
-    title: 'VPR‑LLM Assistant', 
-    src: '/images/sample3.jpg', 
-    caption: 'RAG + multi-agent fixer for VPR.', 
-    href: '/fpga', 
-    tags: ['fpga','ml'],
+    title: 'Boid Ant Simulation', 
+    src: '/images/boids2.GIF', 
+    caption: 'Simple Godot boids simulation to learn compute shaders.', 
+    href: '/graphics', 
+    tags: ['graphics'],
     gallery: [
-      { src: "/images/sample1.jpg", caption: "Overview render" },
-      { src: "/images/sample2.jpg", caption: "Close-up" }
+      { src: "/images/boids2.GIF", caption: "Close-up" },
+      { src: "/images/boids1.GIF", caption: "Full-screen" }
     ]
   },
   { 
