@@ -3,7 +3,6 @@ export const all = [
     title: 'Procedural Grassy Field Simulation', 
     src: '/images/grassgif.gif', 
     caption: 'Endless grassy field rendered using 3D engine built from scratch with C++ and OpenGL', 
-    href: '/graphics' , 
     tags: ['graphics'],
     gallery: [
       { 
@@ -25,7 +24,6 @@ Github page: <a href="https://github.com/taehkim1280/OpenGL3DEngine" target="_bl
     title: 'Particle Life Simulation', 
     src: '/images/particlelife1.GIF', 
     caption: 'Particle life simulation made in Godot with compute shaders.', 
-    href: '/graphics', 
     tags: ['graphics'],
     gallery: [
       { 
@@ -39,7 +37,10 @@ As an example, we can talk about how one could roughly emulate basic structures 
 <li>Then to allow a specific particle P<sub>allowed</sub> to pass, P<sub>allowed</sub> would need to be attracted to P<sub>contents</sub> and have a neutral attraction to P<sub>wall</sub>.</li>
 <li>For particles not allowed P<sub>notallowed</sub>, they'd need a repulsion from the cell wall and its contents.</li>
 <li>These cell like structures can then be made to move by making some contents attracted to other contents that are repelled by them.</li>
-</ul>For more complex structures, I plan to emulate real-life particles by adding a strong-force for bonding particles together, particle polarity, and radiation to represent energy.` 
+</ul>For more complex structures, I plan to emulate real-life particles by adding a strong-force for bonding particles together, particle polarity, and radiation to represent energy.
+
+
+Github page: <a href="https://github.com/taehkim1280/ParticleLifeGodot" target="_blank">github.com/taehkim1280/ParticleLifeGodot</a>` 
       },
       { 
         src: "/images/particlelife2.GIF", 
@@ -58,23 +59,24 @@ As an example, we can talk about how one could roughly emulate basic structures 
   { 
     title: 'Boid Ant Simulation', 
     src: '/images/boids2.GIF', 
-    caption: 'Simple Godot boids simulation to learn compute shaders.', 
-    href: '/graphics', 
+    caption: `Simple Godot boids simulation to learn compute shaders.`, 
     tags: ['graphics'],
     gallery: [
-      { src: "/images/boids2.GIF", caption: "Close-up" },
+      { src: "/images/boids2.GIF", caption: `Github page: <a href="https://github.com/taehkim1280/ComputeShaderBoids" target="_blank">github.com/taehkim1280/ComputeShaderBoids</a>` },
       { src: "/images/boids1.GIF", caption: "Full-screen" }
     ]
   },
   { 
-    title: 'Flex/Bison Compiler', 
-    src: '/images/sample4.jpg', 
-    caption: 'Scanner/parser + IR + peephole opts.', 
-    href: '/compiler', 
-    tags: ['compiler'],
+    title: 'LOOPY SPACE', 
+    src: '/images/loopyspace.png', 
+    caption: 'GMTK Game Jam 2025 Submission', 
+    tags: ['gamedev'],
     gallery: [
-      { src: "/images/sample1.jpg", caption: "Overview render" },
-      { src: "/images/sample2.jpg", caption: "Close-up" }
+      { src: "/images/loopyspace.png", caption: `This was a simple game made with a personal friend and animation student, Cem Coban for GMTK Game Jam 2025. Due to our schedules, we only had a third of the game jam's duration to work on it so we decided on a simple but interesting concept which fit theme of the game jam: 'loops'.
+
+Play on ich.io: <a href="https://gemart.itch.io/loopy-space" target="_blank">gemart.itch.io/loopy-space</a>
+Github page: <a href="https://github.com/taehkim1280/GMTK2025-GAME" target="_blank">github.com/taehkim1280/GMTK2025-GAME</a>` },
+      { src: "/images/loopyspace2.GIF", caption: "Gameplay footage" }
     ]
   },
 ];
