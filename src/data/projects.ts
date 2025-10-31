@@ -22,12 +22,12 @@ Github page: <a href="https://github.com/taehkim1280/OpenGL3DEngine" target="_bl
   },
   { 
     title: 'Particle Life Simulation', 
-    src: '/images/particlelife1.GIF', 
+    src: '/images/particlelife1-resize.gif', 
     caption: 'Particle life simulation made in Godot with compute shaders.', 
     tags: ['projects'],
     gallery: [
       { 
-        src: "/images/particlelife1.GIF", 
+        src: "/images/particlelife1-resize.gif", 
         caption: `This is a small Godot particle life simulation currently capable of rendering 7000 particles at 60fps on RX580. 
 Particle life refers to the behaviour that naturally emerges when a set of particles, each with a ruleset defining the particle's attraction and repulsion with others, are allowed to interact. I was introduced to this topic from a youtube video and the first thing I started thinking of was if I could replicate some biological mechanisms using this simulation. 
 
@@ -43,7 +43,7 @@ As an example, we can talk about how one could roughly emulate basic structures 
 Github page: <a href="https://github.com/taehkim1280/ParticleLifeGodot" target="_blank">github.com/taehkim1280/ParticleLifeGodot</a>` 
       },
       { 
-        src: "/images/particlelife2.GIF", 
+        src: "/images/particlelife2.gif", 
         caption: `Optimizations:<ul>
 <li>Simulation remains stable for randomly generated rulesets thanks to Verlet integration.</li>
 <li>I was also able to maintain highframerates for large particle numbers thanks to compute shaders.</li>
@@ -51,7 +51,7 @@ Github page: <a href="https://github.com/taehkim1280/ParticleLifeGodot" target="
 <li>A next-step for optimization would be to implement chunking so particles don't need to calculate forces for every other particle even if they're very far away.</li></ul>`
       },
       { 
-        src: "/images/particlelife3.GIF", 
+        src: "/images/particlelife3.gif", 
         caption: "Different rule sets produce very different results." 
       }
     ]
@@ -63,7 +63,7 @@ Github page: <a href="https://github.com/taehkim1280/ParticleLifeGodot" target="
     tags: ['projects'],
     gallery: [
       { src: "/images/boids2.GIF", caption: `Github page: <a href="https://github.com/taehkim1280/ComputeShaderBoids" target="_blank">github.com/taehkim1280/ComputeShaderBoids</a>` },
-      { src: "/images/boids1.GIF", caption: "Full-screen" }
+      { src: "/images/boids1.gif", caption: "Full-screen" }
     ]
   },
   { 
@@ -76,7 +76,7 @@ Github page: <a href="https://github.com/taehkim1280/ParticleLifeGodot" target="
 
 Play on ich.io: <a href="https://gemart.itch.io/loopy-space" target="_blank">gemart.itch.io/loopy-space</a>
 Github page: <a href="https://github.com/taehkim1280/GMTK2025-GAME" target="_blank">github.com/taehkim1280/GMTK2025-GAME</a>` },
-      { src: "/images/loopyspace2.GIF", caption: "Gameplay footage" }
+      { src: "/images/loopyspace2.gif", caption: "Gameplay footage" }
     ]
   },
 ];
