@@ -53,10 +53,8 @@ const { title = 'Portfolio', description = 'Projects and work', pageTitle } = As
     <header class="nav">
       <div class="brand"><a href="/">Taehoon Kim</a></div>
       <nav>
-        <a href="/" aria-current={Astro.url.pathname === '/' ? 'page' : undefined}>Home</a>
-        <a href="/graphics" aria-current={Astro.url.pathname.startsWith('/graphics') ? 'page' : undefined}>Graphics</a>
-        <a href="/fpga" aria-current={Astro.url.pathname.startsWith('/fpga') ? 'page' : undefined}>FPGA</a>
-        <a href="/compiler" aria-current={Astro.url.pathname.startsWith('/compiler') ? 'page' : undefined}>Compiler</a>
+        <a href="/" aria-current={Astro.url.pathname === '/' ? 'page' : undefined}>Projects</a>
+        <!-- <a href="/hobbies" aria-current={Astro.url.pathname.startsWith('/hobbies') ? 'page' : undefined}>Hobbies</a> -->
         <a href="/info" aria-current={Astro.url.pathname.startsWith('/info') ? 'page' : undefined}>Info</a>
       </nav>
     </header>

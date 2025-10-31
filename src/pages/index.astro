@@ -2,13 +2,13 @@
 import Base from '../layouts/Base.astro';
 import Gallery from '../components/Gallery.astro';
 import ProjectModal from '../components/ProjectModal.astro';
-import { all } from '../data/projects';
+import { projects as items } from '../data/projects';
 ---
 <Base pageTitle="Home">
   <section>
     <h1 class="page-title1">Taehoon Kim — Projects</h1>
-    <p class="intro">Graphics • FPGA/VPR • Compilers — a compact gallery of selected work. Click a tile for category pages.</p>
+    <p class="intro">Graphics • Simulation • GameDev — Click a card to see more details.</p>
   </section>
-  <Gallery items={all} />
-  <ProjectModal projects={all} />
+  <Gallery items={items} />
+  <ProjectModal projects={items} />
 </Base>

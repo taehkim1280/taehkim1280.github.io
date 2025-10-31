@@ -3,7 +3,7 @@ export const all = [
     title: 'Procedural Grassy Field Simulation', 
     src: '/images/grassgif.gif', 
     caption: 'Endless grassy field rendered using 3D engine built from scratch with C++ and OpenGL', 
-    tags: ['graphics'],
+    tags: ['projects'],
     gallery: [
       { 
         src: "/images/grassgif.gif", 
@@ -24,7 +24,7 @@ Github page: <a href="https://github.com/taehkim1280/OpenGL3DEngine" target="_bl
     title: 'Particle Life Simulation', 
     src: '/images/particlelife1.GIF', 
     caption: 'Particle life simulation made in Godot with compute shaders.', 
-    tags: ['graphics'],
+    tags: ['projects'],
     gallery: [
       { 
         src: "/images/particlelife1.GIF", 
@@ -60,7 +60,7 @@ Github page: <a href="https://github.com/taehkim1280/ParticleLifeGodot" target="
     title: 'Boid Ant Simulation', 
     src: '/images/boids2.GIF', 
     caption: `Simple Godot boids simulation to learn compute shaders.`, 
-    tags: ['graphics'],
+    tags: ['projects'],
     gallery: [
       { src: "/images/boids2.GIF", caption: `Github page: <a href="https://github.com/taehkim1280/ComputeShaderBoids" target="_blank">github.com/taehkim1280/ComputeShaderBoids</a>` },
       { src: "/images/boids1.GIF", caption: "Full-screen" }
@@ -70,7 +70,7 @@ Github page: <a href="https://github.com/taehkim1280/ParticleLifeGodot" target="
     title: 'LOOPY SPACE', 
     src: '/images/loopyspace.png', 
     caption: 'GMTK Game Jam 2025 Submission', 
-    tags: ['gamedev'],
+    tags: ['projects', 'hobbies'],
     gallery: [
       { src: "/images/loopyspace.png", caption: `This was a simple game made with a personal friend and animation student, Cem Coban for GMTK Game Jam 2025. Due to our schedules, we only had a third of the game jam's duration to work on it so we decided on a simple but interesting concept which fit theme of the game jam: 'loops'.
 
@@ -81,6 +81,5 @@ Github page: <a href="https://github.com/taehkim1280/GMTK2025-GAME" target="_bla
   },
 ];
 
-export const graphics = all.filter(p => p.tags?.includes('graphics'));
-export const fpga = all.filter(p => p.tags?.includes('fpga'));
-export const compiler = all.filter(p => p.tags?.includes('compiler'));
+export const projects = all.filter(p => p.tags?.includes('projects'));
+export const hobbies = all.filter(p => p.tags?.includes('hobbies'));
