@@ -57,6 +57,26 @@ Github page: <a href="https://github.com/taehkim1280/ParticleLifeGodot" target="
     ]
   },
   { 
+    title: 'CSC317 Ray Tracer', 
+    src: '/images/raytracing1.png', 
+    caption: 'Ray tracing assignment for Computer Graphics course CSC317.', 
+    tags: ['projects'],
+    gallery: [
+      { src: "/images/raytracing1.png", caption: `Some renders with only basic primitives like spheres and triangle-soup meshes. Next steps are to optimize run time using a BVH like an AABB tree which I've already made in a separate lab but have yet to integrate into this project.` },
+      { src: "/images/raytracing2.png", caption: "" },
+      { src: "/images/raytracing3.png", caption: "" }
+    ]
+  },
+  { 
+    title: 'CSC317 Catmull-Clark Subdivision', 
+    src: '/images/subdiv1.gif', 
+    caption: 'Subdivision assignment for Computer Graphics course CSC317.', 
+    tags: ['projects'],
+    gallery: [
+      { src: "/images/subdiv1.gif", caption: `Basic implementation of the Catmull-Clark subdivision algorithm.` }
+    ]
+  },
+  { 
     title: 'Boid Ant Simulation', 
     src: '/images/boids2.GIF', 
     caption: `Simple Godot boids simulation to learn compute shaders.`, 
@@ -69,7 +89,7 @@ Github page: <a href="https://github.com/taehkim1280/ParticleLifeGodot" target="
   { 
     title: 'LOOPY SPACE', 
     src: '/images/loopyspace.png', 
-    caption: 'GMTK Game Jam 2025 Submission', 
+    caption: 'GMTK Game Jam 2025 Submission.', 
     tags: ['projects', 'hobbies'],
     gallery: [
       { src: "/images/loopyspace.png", caption: `This was a simple game made with a personal friend and animation student, Cem Coban for GMTK Game Jam 2025. Due to our schedules, we only had a third of the game jam's duration to work on it so we decided on a simple but interesting concept which fit theme of the game jam: 'loops'.
