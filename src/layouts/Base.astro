@@ -14,18 +14,21 @@ const { title = 'Portfolio', description = 'Projects and work', pageTitle } = As
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <style>
     :root{
-      --bg:#d6c9ac; 
-      --modalheadbg:#d8d8d8; 
-      --modalbg:#ebebeb; 
+      --bg:#b8d3f5; 
+      --headerbg:#fdf9ea; 
+      --modalheadbg:#9cb6ee; 
+      --modaltitletext:#152b55;
+      --modalbuttontext:#ffffff;
+      --modalbg:#f3f2f1; 
       --modalbgbackdrop:#ebebeb; 
-      --modalbutton:#aaa79d; 
+      --modalbutton:#6588ca; 
       --gradient: #ffffff;
-      --captionbox:#dbd2b2; 
-      --titletext1:#396ea0;
-      --titletext2:#1f3f5e;
-      --smalltext:#010711; 
-      --linktext:#3b4f77; 
-      --footer: #1f2330;
+      --captionbox:#f5e8df; 
+      --titletext2:#1048b1;
+      --smalltext:#3f260f; 
+      --linktext:#3b2a18; 
+      --footer: #3f69b8;
+      --headergradientspread: 60%;
     }
     *{box-sizing:border-box}
     html,body{height:100%}
@@ -37,29 +40,53 @@ const { title = 'Portfolio', description = 'Projects and work', pageTitle } = As
     a{color:var(--linktext); text-decoration:none}
     a:hover{text-decoration:underline}
 
-    .container{max-width:1100px; margin:0 auto; padding:24px 16px 64px}
-    header.nav{display:flex; align-items:center; justify-content:space-between; gap:16px; padding:20px 0 8px;}
+    .headerbackground{
+      width:100%;background: var(--headerbg);
+    }
+    .header{
+      max-width:1100px; margin:0 auto; padding:24px 16px 0px;
+      box-sizing:content-box;
+    }
+    .container{max-width:1100px; margin:0 auto; padding:0px 16px 64px;}
+    header.nav{display:flex; align-items:flex-end; justify-content:space-between; gap:16px; padding:20px 0 8px;}
     .brand{font-weight:800; letter-spacing:-0.02em; font-size:clamp(20px,3.6vw,28px)}
 
     nav a{color:--linktext; margin-left:14px}
     nav a[aria-current="page"]{color:--linktext; font-weight:600}
 
     :global(.page-title1){color:var(--titletext2); font-size:clamp(22px,4vw,30px); margin:.2rem 0;}
-    :global(.intro){color:var(--smalltext); margin-top:4px}
+    
+    :global(.pageheader){
+      width:100%;background: var(--headerbg);
+      mask-image: linear-gradient(to bottom, black var(--headergradientspread), transparent 100%);
+      /* Safari/Webkit prefix for best compatibility */
+      -webkit-mask-image: linear-gradient(to bottom, black var(--headergradientspread), transparent 100%);
+    }    
+    :global(.pageheadercontainer){
+      max-width:1100px; margin:0 auto; padding:4px 16px 40px;
+    }
+    :global(.pagecontainer){
+      max-width:1100px; margin:0 auto; padding:0px 16px 64px;
+    }
+    :global(.intro){color:var(--smalltext); margin-top:4px; font-size: 18px;}
     footer{color:var(--smalltext); font-size:13px; padding-top:24px; border-top:1px solid var(--footer); margin-top:32px}
   </style>
 </head>
 <body>
+  <div class="headerbackground">
+    <div class="header">
+      <header class="nav">
+        <div class="brand"><a href="/">Taehoon Kim</a></div>
+        <nav>
+          <a href="/" aria-current={Astro.url.pathname === '/' ? 'page' : undefined}>Projects</a>
+          <!-- <a href="/hobbies" aria-current={Astro.url.pathname.startsWith('/hobbies') ? 'page' : undefined}>Hobbies</a> -->
+          <a href="/info" aria-current={Astro.url.pathname.startsWith('/info') ? 'page' : undefined}>Info</a>
+        </nav>
+      </header>
+    </div>
+  </div>
+  <slot />
   <div class="container">
-    <header class="nav">
-      <div class="brand"><a href="/">Taehoon Kim</a></div>
-      <nav>
-        <a href="/" aria-current={Astro.url.pathname === '/' ? 'page' : undefined}>Projects</a>
-        <!-- <a href="/hobbies" aria-current={Astro.url.pathname.startsWith('/hobbies') ? 'page' : undefined}>Hobbies</a> -->
-        <a href="/info" aria-current={Astro.url.pathname.startsWith('/info') ? 'page' : undefined}>Info</a>
-      </nav>
-    </header>
-    <slot />
     <footer>
       © {new Date().getFullYear()} Taehoon Kim • Built with Astro • <a href="https://github.com/withastro/astro">Docs</a>
     </footer>

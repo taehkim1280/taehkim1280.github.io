@@ -1,8 +1,8 @@
 export const all = [
   { 
-    title: 'Procedural Grassy Field Simulation', 
+    title: 'PROCEDURAL GRASSY FIELD SIMULATION', 
     src: '/images/grassgif.gif', 
-    caption: 'Endless grassy field rendered using 3D engine built from scratch with C++ and OpenGL', 
+    caption: 'Endless grassy field rendered using 3D engine built from scratch with C++ and OpenGL.', 
     tags: ['projects'],
     gallery: [
       { 
@@ -21,7 +21,7 @@ Github page: <a href="https://github.com/taehkim1280/OpenGL3DEngine" target="_bl
     ]
   },
   { 
-    title: 'Particle Life Simulation', 
+    title: 'PARTICLE LIFE SIMULATION', 
     src: '/images/particlelife1-resize.gif', 
     caption: 'Particle life simulation made in Godot with compute shaders.', 
     tags: ['projects'],
@@ -57,7 +57,7 @@ Github page: <a href="https://github.com/taehkim1280/ParticleLifeGodot" target="
     ]
   },
   { 
-    title: 'CSC317 Ray Tracer', 
+    title: 'CSC317 RAY TRACER', 
     src: '/images/raytracing1.png', 
     caption: 'Ray tracing assignment for Computer Graphics course CSC317.', 
     tags: ['projects'],
@@ -68,7 +68,7 @@ Github page: <a href="https://github.com/taehkim1280/ParticleLifeGodot" target="
     ]
   },
   { 
-    title: 'CSC317 Catmull-Clark Subdivision', 
+    title: 'CSC317 CATMULL-CLARK SUBDIVISION', 
     src: '/images/subdiv1.gif', 
     caption: 'Subdivision assignment for Computer Graphics course CSC317.', 
     tags: ['projects'],
@@ -77,7 +77,7 @@ Github page: <a href="https://github.com/taehkim1280/ParticleLifeGodot" target="
     ]
   },
   { 
-    title: 'Boid Ant Simulation', 
+    title: 'BOID ANT SIMULATION', 
     src: '/images/boids2.GIF', 
     caption: `Simple Godot boids simulation to learn compute shaders.`, 
     tags: ['projects'],
