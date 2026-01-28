@@ -1,4 +1,6 @@
 ---
+import Aquarium from "src/components/aquarium/Aquarium.astro";
+
 const { title = 'Portfolio', description = 'Projects and work', pageTitle } = Astro.props;
 ---
 <!doctype html>
@@ -15,7 +17,9 @@ const { title = 'Portfolio', description = 'Projects and work', pageTitle } = As
   <style>
     :root{
       --bg:#b8d3f5; 
-      --headerbg:#fdf9ea; 
+
+      --herobg:#c1e2f932;
+      --headerbg:#fdf9ea2d; 
       --modalheadbg:#9cb6ee; 
       --modaltitletext:#152b55;
       --modalbuttontext:#ffffff;
@@ -24,9 +28,9 @@ const { title = 'Portfolio', description = 'Projects and work', pageTitle } = As
       --modalbutton:#6588ca; 
       --gradient: #ffffff;
       --captionbox:#f5e8df; 
-      --titletext2:#1048b1;
-      --smalltext:#3f260f; 
-      --linktext:#3b2a18; 
+      --titletext2:#cbddff;
+      --smalltext:#bcd6de; 
+      --linktext:#c3e0e2; 
       --footer: #3f69b8;
       --headergradientspread: 60%;
     }
@@ -37,11 +41,14 @@ const { title = 'Portfolio', description = 'Projects and work', pageTitle } = As
       font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; 
       background: var(--bg);
     }
-    a{color:var(--linktext); text-decoration:none}
+    :global(a){color:var(--linktext); text-decoration:none}
     a:hover{text-decoration:underline}
 
     .headerbackground{
       width:100%;background: var(--headerbg);
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px); /* For Safari support */
+      padding-bottom: 5px;
     }
     .header{
       max-width:1100px; margin:0 auto; padding:24px 16px 0px;
@@ -54,33 +61,56 @@ const { title = 'Portfolio', description = 'Projects and work', pageTitle } = As
     nav a{color:--linktext; margin-left:14px}
     nav a[aria-current="page"]{color:--linktext; font-weight:600}
 
+    html {
+      scroll-behavior: smooth;
+    }
+    section {
+      min-height: 100vh;
+    }
+    :global(li){
+      color:var(--smalltext);
+    }
+
     :global(.page-title1){color:var(--titletext2); font-size:clamp(22px,4vw,30px); margin:.2rem 0;}
-    
+
+    :global(.Herocontainer2){
+      max-width:700px;
+      margin:0 auto; padding:30px 30px 30px;
+      background: var(--herobg);
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px); /* For Safari support */
+    }
+    :global(.Herocontainer){
+      min-height:60vh;
+      display: flex;
+      align-items: center;
+    }
+
     :global(.pageheader){
       width:100%;background: var(--headerbg);
-      mask-image: linear-gradient(to bottom, black var(--headergradientspread), transparent 100%);
-      /* Safari/Webkit prefix for best compatibility */
-      -webkit-mask-image: linear-gradient(to bottom, black var(--headergradientspread), transparent 100%);
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px); /* For Safari support */
     }    
     :global(.pageheadercontainer){
-      max-width:1100px; margin:0 auto; padding:4px 16px 40px;
+      max-width:1100px; margin:0 auto; padding:4px 16px 4px;
     }
     :global(.pagecontainer){
-      max-width:1100px; margin:0 auto; padding:0px 16px 64px;
+      max-width:1100px; margin:0 auto; padding:15px 16px 64px;
     }
     :global(.intro){color:var(--smalltext); margin-top:4px; font-size: 18px;}
     footer{color:var(--smalltext); font-size:13px; padding-top:24px; border-top:1px solid var(--footer); margin-top:32px}
   </style>
 </head>
 <body>
+  <Aquarium />
   <div class="headerbackground">
     <div class="header">
       <header class="nav">
         <div class="brand"><a href="/">Taehoon Kim</a></div>
         <nav>
-          <a href="/" aria-current={Astro.url.pathname === '/' ? 'page' : undefined}>Projects</a>
-          <!-- <a href="/hobbies" aria-current={Astro.url.pathname.startsWith('/hobbies') ? 'page' : undefined}>Hobbies</a> -->
-          <a href="/info" aria-current={Astro.url.pathname.startsWith('/info') ? 'page' : undefined}>Info</a>
+          <a href="#info">Info</a>
+          <a href="#projects">Projects</a>
+          <a href="#hobbies">Hobbies</a>
         </nav>
       </header>
     </div>

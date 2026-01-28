@@ -1,0 +1,16 @@
+---
+import Base from '../../layouts/Base.astro';
+import Gallery from '../Gallery.astro';
+import { hobbies as items } from '../../data/projects';
+---
+<div class="pageheader">
+    <div class="pageheadercontainer">
+        <h1 class="page-title1">Hobbies</h1>
+        <p class="intro">A showcase of what I make in my free time!</p>
+    </div>
+</div>
+<div class="pagecontainer">
+    <Gallery items={items} />
+</div>
+
+

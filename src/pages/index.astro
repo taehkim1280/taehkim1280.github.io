@@ -1,18 +1,23 @@
 ---
 import Base from '../layouts/Base.astro';
+import Hero from '../components/sections/Hero.astro';
+import Projects from '../components/sections/Projects.astro';
+import Hobbies from '../components/sections/Hobbies.astro';
+
 import Gallery from '../components/Gallery.astro';
 import ProjectModal from '../components/ProjectModal.astro';
 import { projects as items } from '../data/projects';
 ---
 <Base pageTitle="Home">
-  <div class="pageheader">
-    <div class="pageheadercontainer">
-      <h1 class="page-title1">Projects</h1>
-      <p class="intro">Graphics • Simulation • GameDev — Click to see more details</p>
-    </div>
-  </div>
-  <div class="pagecontainer">
-    <Gallery items={items} />
-    <ProjectModal projects={items} />
-  </div>
+  <section id="info">
+    <Hero />
+  </section>
+
+  <section id="projects">
+    <Projects />
+  </section>
+
+  <section id="hobbies">
+    <Hobbies />
+  </section>
 </Base>

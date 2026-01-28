@@ -1,0 +1,305 @@
+<canvas id="aquarium-canvas"></canvas>
+
+<script>
+
+    class Fish {
+        constructor(canvas, ctx, body) {
+            this.canvas = canvas;
+            this.ctx = ctx;
+            this.body = body;
+            this.curvx = 0;
+            this.curvy = 0;
+            this.reset();
+        }
+
+        reset() {
+            // cur pos
+            this.x = Math.random() * this.canvas.width;
+            this.y = Math.random() * this.canvas.height;
+
+            // wandering vector
+            this.wx = (Math.random() - 0.5) * 2;
+            this.wy = (Math.random() - 0.5) * 1;
+            this.curtheta = Math.atan2(this.wy, this.wx);
+
+            // appearance
+            this.color = `rgba(255, 255, 255, ${Math.random() * 0.5 + 0.5})`;
+        }
+
+        update(foods, fishes) {
+            // slightly change wandering vector
+            const thetavariation = 0.07;
+            this.curtheta += Math.random()*thetavariation-thetavariation*0.5;
+            this.wx = Math.cos(this.curtheta);
+            this.wy = Math.sin(this.curtheta);
+            this.curtheta = Math.atan2(this.wy, this.wx);
+
+            this.curvx = this.wx;
+            this.curvy = this.wy;
+            
+            let closestfood = {food: null, dist: 1000000};
+            for (let food of foods) {
+                const dx = food.x - this.x;
+                const dy = food.y - this.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < closestfood.dist) {
+                    closestfood = {food: food, dist: dist}
+                }
+                if (dist < 5) {
+                    // fish eats food
+                    food.isDead = true;
+                }
+            }
+            if (closestfood.food && closestfood.dist < 400) {
+                const dx = closestfood.food.x - this.x;
+                const dy = closestfood.food.y - this.y;
+                const foodaccel = 5.0;
+                this.curvx = (dx / closestfood.dist) * foodaccel;
+                this.curvy = (dy / closestfood.dist) * foodaccel;
+            }
+            ///////////////////////////////////////
+            let separation = { x: 0, y: 0 };
+            let alignment = { x: 0, y: 0 };
+            let cohesion = { x: 0, y: 0 };
+            let total = 0;
+
+            const perceptionRadius = 100; 
+
+            for (let other of fishes) {
+                let d = Math.sqrt((this.x - other.x)**2 + (this.y - other.y)**2);
+                
+                if (other !== this && d < perceptionRadius) {
+                    let diff = { x: this.x - other.x, y: this.y - other.y };
+                    separation.x += diff.x / d; 
+                    separation.y += diff.y / d;
+
+                    alignment.x += other.curvx;
+                    alignment.y += other.curvy;
+
+                    cohesion.x += other.x;
+                    cohesion.y += other.y;
+
+                    total++;
+                }
+            }
+
+            if (total > 0) {
+                alignment.x /= total; alignment.y /= total;
+                cohesion.x /= total; cohesion.y /= total;
+                cohesion.x = (cohesion.x - this.x) * 0.05;
+                cohesion.y = (cohesion.y - this.y) * 0.05;
+                alignment.x *= 0.1;
+                alignment.y *= 0.1;
+            }
+            ///////////////////////////////////////
+
+            // Combine forces
+            const separationCo = 0.2;
+            const alignmentCo = 0.2;
+            const cohesionCo = 0.2;
+            this.curvx += separation.x * separationCo + alignment.x * alignmentCo + cohesion.x * cohesionCo;
+            this.curvy += separation.y * separationCo + alignment.y * alignmentCo + cohesion.y * cohesionCo;
+
+
+            this.x += this.curvx;
+            this.y += this.curvy;
+            if (this.x > this.canvas.width) this.x = 0;
+            if (this.x < 0) this.x = this.canvas.width;
+            if (this.y > this.canvas.height) this.y = 0;
+            if (this.y < 0) this.y = this.canvas.height;
+        }
+
+        draw() {
+            this.ctx.save();
+
+            this.ctx.translate(this.x, this.y);
+            let angle = Math.atan2(this.curvy, this.curvx);
+            this.ctx.rotate(angle);
+            if (this.curvx < 0) {
+                this.ctx.scale(1, -1); 
+            }
+
+            this.ctx.fillStyle = this.color;
+            this.ctx.font = "14px monospace";
+            this.ctx.textAlign = "center";
+            this.ctx.textBaseline = "middle";
+            this.ctx.fillText(this.body, 0, 0);
+            this.ctx.restore();
+        }
+    }
+
+    class Bubble {
+        constructor(canvas, ctx, x, y) {
+            this.canvas = canvas;
+            this.ctx = ctx;
+            this.x = x;
+            this.y = y;
+            this.wy = -1;
+            this.wx = 0;
+            this.curtheta = Math.atan2(this.wy, this.wx);
+            this.color = `rgba(100, 130, 255, ${Math.random() * 0.5 + 0.5})`;
+        }
+
+        update() {
+            // slightly change wandering vector
+            const thetavariation = 0.25;
+            this.curtheta += Math.random()*thetavariation-thetavariation*0.5;
+            this.wx = Math.cos(this.curtheta);
+            //this.wy = Math.sin(this.curtheta);
+            this.curtheta = Math.atan2(this.wy, this.wx);
+
+            let curvy = this.wy;
+            let curvx = this.wx;
+
+            this.y += curvy;
+            this.x += curvx;
+            
+            if (this.y < 0) {
+                this.isDead = true;
+            }
+        }
+
+        draw() {
+            this.ctx.fillStyle = this.color;
+            this.ctx.font = "14px monospace";
+            this.ctx.fillText('o', this.x, this.y);
+        }
+    }
+    class Food {
+        constructor(canvas, ctx, x, y) {
+            this.canvas = canvas;
+            this.ctx = ctx;
+            this.x = x;
+            this.y = y;
+            this.wy = 1;
+            this.wx = 0;
+            this.curtheta = Math.atan2(this.wy, this.wx);
+            this.color = `rgba(200, 130, 50, 255)`;
+        }
+
+        update() {
+            // slightly change wandering vector
+            const thetavariation = 0.25;
+            this.curtheta += Math.random()*thetavariation-thetavariation*0.5;
+            this.wx = Math.cos(this.curtheta);
+            //this.wy = Math.sin(this.curtheta);
+            this.curtheta = Math.atan2(this.wy, this.wx);
+
+            let curvy = this.wy;
+            let curvx = this.wx;
+
+            this.y += curvy;
+            this.x += curvx;
+            if (this.y > this.canvas.height) {
+                this.isDead = true;
+            }
+        }
+
+        draw() {
+            this.ctx.fillStyle = this.color;
+            this.ctx.font = "14px monospace";
+            this.ctx.fillText('*', this.x, this.y);
+        }
+    }
+    ///////////////////////////////////////////////////////////
+
+
+    const canvas = document.getElementById('aquarium-canvas');
+    const ctx = canvas.getContext('2d');
+    let fishes = [];
+    let bubbles = [];
+    let foods = [];
+    let mouse = { x: 0, y: 0, clicking: false };
+
+    function init() {
+        // Handle High DPI displays for sharp ASCII
+        const dpr = window.devicePixelRatio || 1;
+        canvas.width = window.innerWidth * dpr;
+        canvas.height = window.innerHeight * dpr;
+        ctx.scale(dpr, dpr);
+        canvas.style.width = `${window.innerWidth}px`;
+        canvas.style.height = `${window.innerHeight}px`;
+
+        fishes = Array.from({ length: 50 }, () => new Fish(canvas, ctx, "><(((°>"));
+        for (let i = 0; i < 10; i++) {
+            let bx = Math.random() * canvas.width;
+            let by = Math.random() * canvas.height;
+            bubbles.push(new Bubble(canvas, ctx, bx, by));
+        }
+    }
+
+    const fps = 30;
+    const T = 1/30;
+    let then = performance.now();
+
+    const bubbleT = 15;
+    let curCount = 0;
+
+    const foodCD = 1000;
+    let lastfood = -1000;
+
+    function animate(now) {
+        requestAnimationFrame(animate);
+
+        const elapsed = now - then;
+
+        if (elapsed > T) {
+            then = now - (elapsed % T);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            if (mouse.clicking && (performance.now()-lastfood) > foodCD) {
+                foods.push(new Food(canvas, ctx, mouse.x, mouse.y));
+                lastfood = performance.now();
+            }
+
+            foods.forEach(food => {
+                food.update();
+                food.draw();
+            });
+            fishes.forEach(fish => {
+                fish.update(foods, fishes);
+                fish.draw();
+            });
+
+
+            curCount += 1;
+            if (curCount == bubbleT) {
+                curCount = 0;
+                let bx = Math.random() * canvas.width;
+                let by = Math.random() * canvas.height;
+                bubbles.push(new Bubble(canvas, ctx, bx, by));
+            }
+            bubbles.forEach((bubble, index) => {
+                bubble.update();
+                bubble.draw();
+            });
+            bubbles = bubbles.filter(b => !b.isDead);
+            foods = foods.filter(b => !b.isDead);
+        }
+    }
+
+    // Event Listeners
+    window.addEventListener('mousemove', (e) => {
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+    });
+    window.addEventListener('mousedown', () => mouse.clicking = true);
+    window.addEventListener('mouseup', () => mouse.clicking = false);
+    window.addEventListener('resize', init);
+
+    init();
+    animate(then);
+</script>
+
+<style>
+  #aquarium-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1; /* Stay behind content */
+    pointer-events: none; /* Let clicks pass through to content */
+    background: #0f172a; /* Dark deep sea background */
+  }
+</style>

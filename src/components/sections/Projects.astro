@@ -1,0 +1,17 @@
+---
+import Base from '../../layouts/Base.astro';
+import Gallery from '../Gallery.astro';
+import ProjectModal from '../ProjectModal.astro';
+import { projects as items } from '../../data/projects';
+---
+
+<div class="pageheader">
+    <div class="pageheadercontainer">
+        <h1 class="page-title1">Projects</h1>
+        <p class="intro">Graphics • Simulation • GameDev — Click to see more details</p>
+    </div>
+</div>
+<div class="pagecontainer">
+    <Gallery items={items} />
+    <ProjectModal projects={items} />
+</div>
