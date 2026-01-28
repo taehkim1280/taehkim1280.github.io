@@ -1,0 +1,85 @@
+
+
+<div id="resume-modal" class="lb" aria-hidden="true">
+  <div class="lb-backdrop" data-close></div>
+  <div class="lb-dialog resume-dialog">
+    <div class="lb-head">
+      <div class="lb-title">Taehoon_Kim_Resume.pdf</div>
+      <div class="lb-actions">
+        <a href="/Taehoon_Kim_Resume_01_17.pdf" download class="btn">Download</a>
+        <button class="btn" id="resume-close">✕</button>
+      </div>
+    </div>
+    <div class="lb-body resume-body">
+      <object
+        data="/Taehoon_Kim_Resume_01_17.pdf#navpanes=0&scrollbar=0"
+        type="application/pdf"
+        width="100%"
+        height="100%"
+      >
+        <div class="pdf-fallback">
+          <p>It looks like your browser doesn't support embedded PDFs.</p>
+          <a href="/Taehoon_Kim_Resume_01_17.pdf" class="btn">View Resume PDF</a>
+        </div>
+      </object>
+    </div>
+  </div>
+</div>
+
+<script>
+    const modal = document.getElementById('resume-modal');
+    const closeBtn = document.getElementById('resume-close');
+
+    function openResume() {
+        if (!modal) return;
+        modal.classList.add('open');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden'; // Prevent scrolling background
+    }
+
+    function closeResume() {
+        if (!modal) return;
+        modal.classList.remove('open');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+    }
+
+    closeBtn?.addEventListener('click', closeResume);
+
+    window.__openResume = openResume;
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeResume();
+    });
+    modal?.addEventListener('click', (e: MouseEvent) => {
+        const target = e.target as HTMLElement | null;
+        console.log(target);
+        if (target?.dataset?.close !== undefined) closeResume();
+    });
+</script>
+
+<style>
+  .resume-dialog {
+    width: 80%;
+    height: 90vh; /* Takes up most of the screen */
+    max-width: 1000px;
+  }
+
+  .resume-body {
+    padding: 0; /* PDF viewer needs the full space */
+    background: #525659; /* Standard PDF viewer gray */
+  }
+
+  .pdf-fallback {
+    color: white;
+    text-align: center;
+    padding: 2rem;
+  }
+
+  @media (max-width: 910px) {
+    .resume-dialog {
+      width: 100%;
+      height: 100%;
+    }
+  }
+</style>

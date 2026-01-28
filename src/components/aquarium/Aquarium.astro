@@ -53,7 +53,7 @@
             if (closestfood.food && closestfood.dist < 400) {
                 const dx = closestfood.food.x - this.x;
                 const dy = closestfood.food.y - this.y;
-                const foodaccel = 3.0;
+                const foodaccel = 2.0;
                 this.curvx = (dx / closestfood.dist) * foodaccel;
                 this.curvy = (dy / closestfood.dist) * foodaccel;
             }
@@ -197,7 +197,7 @@
 
         draw() {
             this.ctx.fillStyle = this.color;
-            this.ctx.font = "14px monospace";
+            this.ctx.font = "25px monospace";
             this.ctx.fillText('*', this.x, this.y);
         }
     }
@@ -219,8 +219,8 @@
         ctx.scale(dpr, dpr);
         canvas.style.width = `${window.innerWidth}px`;
         canvas.style.height = `${window.innerHeight}px`;
-
-        fishes = Array.from({ length: 50 }, () => new Fish(canvas, ctx, "><(((°>"));
+        const numOfFish = 50*(canvas.width*canvas.height/977280);
+        fishes = Array.from({ length: numOfFish }, () => new Fish(canvas, ctx, "><(((°>"));
         for (let i = 0; i < 10; i++) {
             let bx = Math.random() * canvas.width;
             let by = Math.random() * canvas.height;
@@ -235,7 +235,7 @@
     const bubbleT = 15;
     let curCount = 0;
 
-    const foodCD = 1000;
+    const foodCD = 100;
     let lastfood = -1000;
 
     function animate(now) {

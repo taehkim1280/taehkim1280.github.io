@@ -1,4 +1,5 @@
 ---
+import ResumeModal from '../components/sections/ResumeModal.astro';
 import Aquarium from "src/components/aquarium/Aquarium.astro";
 
 const { title = 'Portfolio', description = 'Projects and work', pageTitle } = Astro.props;
@@ -20,16 +21,16 @@ const { title = 'Portfolio', description = 'Projects and work', pageTitle } = As
 
       --herobg:#c1e2f932;
       --headerbg:#fdf9ea2d; 
-      --modalheadbg:#9cb6ee; 
-      --modaltitletext:#152b55;
+      --modalheadbg:#0d0d2dbd; 
+      --modaltitletext:#9cbaf2;
       --modalbuttontext:#ffffff;
-      --modalbg:#f3f2f148; 
+      --modalbg:#6f899648; 
       --modalbgbackdrop:#e3aaaa47; 
       --modalbutton:#6588ca; 
       --gradient: #ffffff;
       --titletext2:#cbddff;
       --smalltext:#bcd6de; 
-      --linktext:#c3e0e2; 
+      --linktext:#75a4d4; 
       --footer: #3f69b8;
       --headergradientspread: 60%;
     }
@@ -40,6 +41,8 @@ const { title = 'Portfolio', description = 'Projects and work', pageTitle } = As
       font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; 
       background: var(--bg);
     }
+    
+
     :global(a){color:var(--linktext); text-decoration:none}
     a:hover{text-decoration:underline}
 
@@ -50,15 +53,16 @@ const { title = 'Portfolio', description = 'Projects and work', pageTitle } = As
       padding-bottom: 5px;
     }
     .header{
-      max-width:1100px; margin:0 auto; padding:24px 16px 0px;
+      max-width:1100px; margin:0 auto; padding:10px 16px 0px;
       box-sizing:content-box;
     }
     .container{max-width:1100px; margin:0 auto; padding:0px 16px 64px;}
     header.nav{display:flex; align-items:flex-end; justify-content:space-between; gap:16px; padding:20px 0 8px;}
-    .brand{font-weight:800; letter-spacing:-0.02em; font-size:clamp(20px,3.6vw,28px)}
 
-    nav a{color:--linktext; margin-left:14px}
-    nav a[aria-current="page"]{color:--linktext; font-weight:600}
+    .brand{color:var(--titletext2); font-weight:800; letter-spacing:-0.02em; font-size:clamp(20px,3.6vw,35px)}
+    nav a{color:var(--linktext); font-size: 18px; margin-left:14px}
+    nav a[aria-current="page"]{color:var(--linktext); font-weight:600}
+
 
     html {
       scroll-behavior: smooth;
@@ -69,7 +73,7 @@ const { title = 'Portfolio', description = 'Projects and work', pageTitle } = As
     :global(li){
       color:var(--smalltext);
     }
-
+    :global(.Hero-title1){color:var(--titletext2); font-size:clamp(22px,4vw,30px); margin:.2rem 0;padding:0px 0px 10px;}
     :global(.page-title1){color:var(--titletext2); font-size:clamp(22px,4vw,30px); margin:.2rem 0;}
 
     :global(.Herocontainer2){
@@ -78,6 +82,7 @@ const { title = 'Portfolio', description = 'Projects and work', pageTitle } = As
       background: var(--herobg);
       backdrop-filter: blur(3px);
       -webkit-backdrop-filter: blur(3px); /* For Safari support */
+      border-radius: 10px;
     }
     :global(.Herocontainer){
       min-height:60vh;
@@ -89,14 +94,33 @@ const { title = 'Portfolio', description = 'Projects and work', pageTitle } = As
       width:100%;background: var(--headerbg);
       backdrop-filter: blur(3px);
       -webkit-backdrop-filter: blur(3px); /* For Safari support */
+      padding:7px 0px 7px;
     }    
     :global(.pageheadercontainer){
       max-width:1100px; margin:0 auto; padding:4px 16px 4px;
     }
     :global(.pagecontainer){
-      max-width:1100px; margin:0 auto; padding:15px 16px 64px;
+      max-width:1100px; margin:0 auto; padding:15px 16px 30px;
     }
-    :global(.intro){color:var(--smalltext); margin-top:4px; font-size: 18px;}
+    :global(.intro){
+      color:var(--smalltext); margin-top:4px; margin-bottom:4px; font-size: 18px;
+    }
+    :global(.intro2){
+      color:var(--smalltext); margin-top:2px; margin-bottom:4px; font-size: 18px;
+    }
+    :global(.resume-btn) {
+      background: none;
+      border: none;
+      padding: 0;
+      margin: 0;
+      font: inherit;
+
+      cursor: pointer;
+      color: #afd3ff;
+      text-decoration: underline; 
+      font-size: 17;
+      display: inline;
+    }
     footer{color:var(--smalltext); font-size:13px; padding-top:24px; border-top:1px solid var(--footer); margin-top:32px}
   </style>
 </head>
@@ -105,7 +129,7 @@ const { title = 'Portfolio', description = 'Projects and work', pageTitle } = As
   <div class="headerbackground">
     <div class="header">
       <header class="nav">
-        <div class="brand"><a href="/">Taehoon Kim</a></div>
+        <div class="brand">Taehoon Kim</div>
         <nav>
           <a href="#info">Info</a>
           <a href="#projects">Projects</a>
@@ -120,5 +144,6 @@ const { title = 'Portfolio', description = 'Projects and work', pageTitle } = As
       © {new Date().getFullYear()} Taehoon Kim • Built with Astro • <a href="https://github.com/withastro/astro">Docs</a>
     </footer>
   </div>
+  <ResumeModal />
 </body>
 </html>
