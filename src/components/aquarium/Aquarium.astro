@@ -45,7 +45,7 @@
                 if (dist < closestfood.dist) {
                     closestfood = {food: food, dist: dist}
                 }
-                if (dist < 5) {
+                if (dist < 30) {
                     // fish eats food
                     food.isDead = true;
                 }
@@ -53,7 +53,7 @@
             if (closestfood.food && closestfood.dist < 400) {
                 const dx = closestfood.food.x - this.x;
                 const dy = closestfood.food.y - this.y;
-                const foodaccel = 5.0;
+                const foodaccel = 3.0;
                 this.curvx = (dx / closestfood.dist) * foodaccel;
                 this.curvy = (dy / closestfood.dist) * foodaccel;
             }
