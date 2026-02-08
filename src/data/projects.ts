@@ -1,4 +1,19 @@
 export const all = [
+  
+  { 
+    title: 'ALL GEESE MUST DIE', 
+    src: '/images/GEESPOSTERSMALL.jpg', 
+    caption: 'BIGMODE Game Jam 2026 Submission.', 
+    tags: ['projects', 'hobbies'],
+    gallery: [
+      { src: '/images/GEESPOSTERSMALL.jpg', caption: `A game made with 2 of my friends over 10 days. The Game Jam theme was 'Slick' so we went with an ice theme where enemies slide and bounce across the map.
+
+Play on ich.io: <a href="https://heejebes.itch.io/all-geese-must-die" target="_blank">heejebes.itch.io/all-geese-must-die</a>
+Github page: <a href="https://github.com/taehkim1280/GOOSEFIGHTER_BIGMODE2026" target="_blank">github.com/taehkim1280/GOOSEFIGHTER_BIGMODE2026</a>` },
+      { src: "/images/geesegameplay.gif", caption: "Gameplay footage" },
+      { src: "/images/geesearena.jpg", caption: "All 2d assets authored by my close friend Julia Lin." }
+    ]
+  },
   { 
     title: 'PROCEDURAL GRASSY FIELD SIMULATION', 
     src: '/images/grassgif.gif', 
