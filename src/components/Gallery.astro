@@ -1,16 +1,17 @@
 ---
-interface Item { title: string; src: string; caption?: string; tags?: string[] }
-const { items = [] as Item[] } = Astro.props;
 import ProjectModal from './ProjectModal.astro';
+interface Item { title: string; src: string; caption?: string; tags?: string[] }
+
+const { items = [] as Item[] } = Astro.props;
+
+// Generate a random ID for this gallery
+const galleryId = 'gallery-' + Math.random().toString(36).slice(2, 9);
 ---
-<div class="gallery-container">
+
+<div class="gallery-container" id={galleryId}>
   <div class="gallery">
     {items.map((p, idx) => (
-      <button
-        class="tile"
-        data-idx={idx}
-        aria-label={`Open ${p.title}`}
-      >
+      <button class="tile" data-idx={idx} aria-label={`Open ${p.title}`} type="button">
         <figure>
           <img src={p.src} alt={p.title} loading="lazy" />
           <figcaption>
@@ -23,39 +24,22 @@ import ProjectModal from './ProjectModal.astro';
   </div>
 </div>
 
+<ProjectModal projects={items} galleryId={galleryId} />
 
-<!-- embed the modal so its script runs and defines the global -->
-<ProjectModal projects={items} />
-
-<!-- connect the buttons to the modal -->
-<script>
-  // declare the global defined inside ProjectModal.astro
-  declare global {
-    interface Window {
-      __openProjectModal?: (projIdx: number, imgIdx?: number) => void;
-    }
+<script define:vars={{ galleryId }}>
+  const container = document.getElementById(galleryId);
+  if (container) {
+    const tiles = container.querySelectorAll('.tile');
+    tiles.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // Dispatch event with the Unique ID
+        document.dispatchEvent(new CustomEvent('open-project-modal', {
+          detail: { id: galleryId, index: Number(btn.dataset.idx) }
+        }));
+      });
+    });
   }
-
-  // select every gallery tile
-  const tiles = Array.from(document.querySelectorAll<HTMLButtonElement>('.tile'));
-
-  // add click + keyboard handlers
-  tiles.forEach((btn, fallbackIdx) => {
-    btn.addEventListener('click', () => {
-      const i = Number(btn.dataset.idx ?? fallbackIdx);
-      // safely call the global modal opener
-      window.__openProjectModal?.(i, 0);
-    });
-
-    btn.addEventListener('keypress', (e: KeyboardEvent) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        btn.click();
-      }
-    });
-  });
 </script>
-
 
 <style>
   :root { --col: 438px; --gap: 16px; }
